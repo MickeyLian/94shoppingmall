@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljn.mall.dao.IProductDao">
+  <resultMap id="BaseResultMap" type="com.ljn.mall.domain.Product">
+    <id column="pid" jdbcType="VARCHAR" property="pid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="marketPrice" jdbcType="DOUBLE" property="marketPrice" />
+    <result column="shopPrice" jdbcType="DOUBLE" property="shopPrice" />
+    <result column="pimage" jdbcType="VARCHAR" property="pimage" />
+    <result column="pdate" jdbcType="DATE" property="pdate" />
+    <result column="isHot" jdbcType="INTEGER" property="isHot" />
+    <result column="pdesc" jdbcType="VARCHAR" property="pdesc" />
+    <result column="pflag" jdbcType="INTEGER" property="pflag" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+  </resultMap>
+  <delete id="deleteById" parameterType="java.lang.String">
+    delete from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ljn.mall.domain.Product">
+    insert into product (pid, pname, marketPrice, shopPrice, pimage, pdate, 
+      isHot, pdesc, pflag, cid)
+    values (#{pid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, #{marketPrice,jdbcType=DOUBLE}, 
+      #{shopPrice,jdbcType=DOUBLE}, #{pimage,jdbcType=VARCHAR}, #{pdate,jdbcType=DATE}, 
+      #{isHot,jdbcType=INTEGER}, #{pdesc,jdbcType=VARCHAR}, #{pflag,jdbcType=INTEGER}, 
+      #{cid,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateById" parameterType="com.ljn.mall.domain.Product">
+    update product
+    set pname = #{pname,jdbcType=VARCHAR},
+      marketPrice = #{marketPrice,jdbcType=DOUBLE},
+      shopPrice = #{shopPrice,jdbcType=DOUBLE},
+      pimage = #{pimage,jdbcType=VARCHAR},
+      pdate = #{pdate,jdbcType=DATE},
+      isHot = #{isHot,jdbcType=INTEGER},
+      pdesc = #{pdesc,jdbcType=VARCHAR},
+      pflag = #{pflag,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select pid, pname, marketPrice, shopPrice, pimage, pdate, isHot, pdesc, pflag, 
+    cid
+    from product
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select pid, pname, marketPrice, shopPrice, pimage, pdate, isHot, pdesc, pflag, cid
+    from product
+  </select>
+  <select id="selectNewProducts" resultMap="BaseResultMap">
+  	select * from product where pflag=0 order by pdate desc limit 0,9
+  </select>
+  <select id="selectHotProducts" resultMap="BaseResultMap">
+  	select * from product where pflag=0 and isHot=1 order by pdate desc limit 0,9
+  </select>
+  <select id="selectBycidWithPage" resultMap="BaseResultMap">
+  	select * from product where cid=#{cid} and pflag=0 limit #{startIndex},12
+  </select>
+  <select id="pagecount" parameterType="java.lang.String" resultType="int">
+  	select count(*) from product where cid=#{cid} 
+  </select>
+  <select id="findAllProductsWithPage" resultMap="BaseResultMap">
+    select * from product where pflag=0 limit #{startIndex},6
+  </select>
+  <select id="findTotalCount" resultType="int">
+  	select count(*) from product where pflag=0
+  </select>
+  <update id="updatepflagByID" parameterType="com.ljn.mall.domain.Product">
+  	 update product set pflag=1 where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectBypflag" resultMap="BaseResultMap">
+    select * from product where pflag=1 limit #{startIndex},6
+  </select>
+  <select id="findDownProCount" resultType="int">
+  	select count(*) from product where pflag=1
+  </select>
+  <update id="updatepflagTo0ByID" parameterType="com.ljn.mall.domain.Product">
+  	 update product set pflag=0 where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <select id="findProduct" resultMap="BaseResultMap">
+  	select * from product where pname like "%"#{key}"%" and pflag=0 limit #{startIndex},12
+  </select>
+  <select id="findkeyProductCount" resultType="int" parameterType="string">
+  	select count(*) from product where pname like "%"#{key}"%" and pflag=0
+  </select>
+</mapper>
