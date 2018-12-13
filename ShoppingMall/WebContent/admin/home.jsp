@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Language" content="zh-cn">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>后台管理系统</title>
 <style>
 body {
 	SCROLLBAR-ARROW-COLOR: #ffffff;

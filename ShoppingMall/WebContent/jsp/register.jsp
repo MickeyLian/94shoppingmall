@@ -6,6 +6,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>会员注册</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon/favicon.ico">
+<link rel="Bookmark" href="${pageContext.request.contextPath}/img/icon/favicon.ico">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/bootstrap.min.css"
 	type="text/css" />
@@ -78,7 +80,7 @@ font {
 				<font>会员注册</font>USER REGISTER
 				<form class="form-horizontal" style="margin-top: 5px;"
 					action="${pageContext.request.contextPath}/userRegister"
-					method="post">
+					method="post" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="username" class="col-sm-2 control-label">用户名</label>
 						<div class="col-sm-6">
@@ -123,6 +125,12 @@ font {
 							</label> <label class="radio-inline"> <input type="radio"
 								name="sex" id="inlineRadio2" value="女"> 女
 							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="date" class="col-sm-2 control-label">用户头像</label>
+						<div class="col-sm-6">
+							<input type="file" name="photo" class="form-control">
 						</div>
 					</div>
 					<div class="form-group">

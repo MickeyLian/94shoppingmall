@@ -13,4 +13,7 @@ public interface IUserService {
 	    int update(User user);
 	    boolean active(String code);
 	    User selectLogin(User user);
+	    int updatePassword(User user);
+		String getpassword(String uid);		
+		int updatePhoto(User user);	
 }

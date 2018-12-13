@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ljn.mall.dao.IProductDao;
+import com.ljn.mall.domain.Comment;
 import com.ljn.mall.domain.Product;
+import com.ljn.mall.domain.Reply;
 import com.ljn.mall.service.IProductService;
 import com.ljn.mall.utils.PageModel;
 @Service
@@ -114,6 +116,42 @@ public class ProductServiceImpl implements IProductService {
 		pm.setList(list);
 		pm.setUrl("findProductByKey?key="+key);
 		return pm;
+	}
+
+	/**
+	 * 增加一条评论
+	 */
+	@Override
+	public void insertComment(Comment comment) {
+		
+		productDao.insertComment(comment);
+	}
+
+	/**
+	 * 增加一条回复
+	 */
+	@Override
+	public void insertReply(Reply reply) {
+		
+		productDao.insertReply(reply);
+	}
+
+	/**
+	 * 查询评论列表
+	 */
+	@Override
+	public List<Comment> findComments() {
+		
+		return productDao.findComments();
+	}
+
+	/**
+	 * 查询回复列表
+	 */
+	@Override
+	public List<Reply> findReplys() {
+		
+		return productDao.findReplys();
 	}
 
 

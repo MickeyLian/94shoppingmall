@@ -152,6 +152,7 @@ public class OrderController {
 		orderService.updateOrder(order);
 		// 向易宝支付发送参数
 		// 把付款所需要的参数准备好:
+		//p1_MerId和keyValue需要到官网上申请
 		String p0_Cmd = "Buy";
 		// 商户编号
 		String p1_MerId = "10001126856";

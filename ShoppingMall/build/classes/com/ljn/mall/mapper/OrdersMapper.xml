@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ljn.mall.dao.IOrdersDao">
+  <resultMap id="BaseResultMap" type="com.ljn.mall.domain.Orders">
+    <id column="oid" jdbcType="VARCHAR" property="oid" />
+    <result column="ordertime" jdbcType="TIMESTAMP" property="ordertime" />
+    <result column="total" jdbcType="DOUBLE" property="total" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <!-- <result column="uid" jdbcType="VARCHAR" property="user" /> -->
+    <association property="user" column="uid" javaType="com.ljn.mall.domain.User">
+    	<id property="uid" column="uid"/>
+    </association>
+  </resultMap>
+  <delete id="deleteById" parameterType="java.lang.String">
+    delete from orders
+    where oid = #{oid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ljn.mall.domain.Orders">
+    insert into orders (oid, ordertime, total, 
+      state, address, name, 
+      telephone, uid)
+    values (#{oid,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP}, #{total,jdbcType=DOUBLE}, 
+      #{state,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="update" parameterType="com.ljn.mall.domain.Orders">
+    update orders
+    set ordertime = #{ordertime,jdbcType=TIMESTAMP},
+      total = #{total,jdbcType=DOUBLE},
+      state = #{state,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=VARCHAR}
+  </update>
+  <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select oid, ordertime, total, state, address, name, telephone, uid
+    from orders
+    where oid = #{oid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select oid, ordertime, total, state, address, name, telephone, uid
+    from orders
+  </select>
+  <insert id="saveOrder" parameterType="com.ljn.mall.domain.Orders">
+    insert into orders (oid, ordertime, total,state, address, name, telephone, uid)
+    values (#{oid,jdbcType=VARCHAR}, #{ordertime,jdbcType=TIMESTAMP}, #{total,jdbcType=DOUBLE}, 
+      #{state,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{user.uid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="saveOrderItem" parameterType="com.ljn.mall.domain.Orderitem">
+  	insert into orderitem (itemid, quantity, total, 
+      pid, oid)
+    values (#{itemid,jdbcType=VARCHAR}, #{quantity,jdbcType=INTEGER}, #{total,jdbcType=DOUBLE}, 
+      #{product.pid,jdbcType=VARCHAR}, #{orders.oid,jdbcType=VARCHAR})
+  </insert>
+  <select id="getTotalRecords" parameterType="com.ljn.mall.domain.User" resultType="int">
+  	select count(*) from orders where uid=#{uid}	
+  </select>
+  <select id="findMyOrderWithPage" resultMap="BaseResultMap">
+  	select * from orders where uid=#{user.uid} limit #{startIndex},3
+  </select>
+  <select id="selectItemAndProduct" parameterType="java.lang.String" resultType="java.util.Map">
+  	select * from orderItem o,product p where o.pid=p.pid and oid=#{oid}
+  </select>
+  <select id="findOrderByOid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from orders where oid=#{oid}
+  </select>
+  <delete id="deleteOrderByoid" parameterType="java.lang.String">
+  	delete from orders where oid=#{oid}
+  </delete>
+  <update id="updateOrder" parameterType="com.ljn.mall.domain.Orders">
+  	update orders set 
+  	ordertime=#{ordertime} ,total=#{total} ,state=#{state},
+  	address=#{address},name=#{name}, telephone=#{telephone} where oid=#{oid}
+  </update>
+  <select id="findOrders" resultMap="BaseResultMap">
+  	select * from orders
+  </select>
+  <select id="findOrderswithstate" resultMap="BaseResultMap">
+  	select * from orders where state=#{state}
+  </select>
+  
+</mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 
 	<head>
@@ -8,10 +9,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>关于我们</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" />
-		<script src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="${pageContext.request.contextPath}/js/jquery-1.12.0.min.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="${pageContext.request.contextPath}/js/bootstrap-hover-dropdown.min.js"></script>
 		<!-- 引入自定义css文件 style.css -->
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css"/>
+		
 	</head>
 
 	<body>
@@ -25,18 +28,34 @@
 				<div class="col-md-5">
 					<img src="${pageContext.request.contextPath}/img/header.png" />
 				</div>
+				<input type="hidden" name="uid" value="${loginUser.uid }"/>
 				<div class="col-md-3" style="padding-top:20px">
 					<ol class="list-inline">
 					  <c:if test="${empty loginUser}">
 						<li><a href="${pageContext.request.contextPath}/login"><div style="color: red">亲，请登录</div></a></li>
 						<li><a href="${pageContext.request.contextPath}/register">免费注册</a></li>
-						
 					  </c:if>
+					  
 					  <c:if test="${not empty loginUser}">
-						<li>欢迎 ${loginUser.username }</li>						
-						<li><a href="${pageContext.request.contextPath}/logout">退出</a></li>
+					  	<li><a href="${pageContext.request.contextPath}/modifyUserPhotojsp">
+					  		<img alt="#" src="${pageContext.request.contextPath}/${loginUser.photo }" class="img-circle" height="30" width="30"/></a>
+					  	</li>
+					  	
+						<li class="dropdown">
+							
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="500" 
+							data-close-others="false"> ${loginUser.username }<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a tabindex="-1" href="${pageContext.request.contextPath}/userinfo">个人信息</a></li>
+								<li><a tabindex="-1" href="${pageContext.request.contextPath}/modifyPasswordjsp">修改密码</a></li>
+								<li> <hr style="margin-top: 0px; margin-bottom: 0px;"/></li>
+								<li><a tabindex="-1" href="${pageContext.request.contextPath}/logout">退出</a></li>
+							</ul>
+							
+						</li>			
 						<li><a href="${pageContext.request.contextPath}/jsp/cart.jsp">购物车</a></li>
 						<li><a href="${pageContext.request.contextPath}/findMyOrderWithPage?curPage=1">我的订单</a></li>
+								
 					  </c:if>
 					</ol>
 				</div>

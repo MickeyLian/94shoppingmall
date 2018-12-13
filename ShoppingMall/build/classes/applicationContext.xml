@@ -32,7 +32,7 @@
 		<!-- configLocation指定全局配置文件的位置 -->
 		<property name="configLocation"  value="classpath:mybatis-config.xml"></property>
 		<!-- mybatis的配置文件路径 -->
-		<property name="mapperLocations" value="classpath:com/ljn/mall/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath*:com/ljn/mall/mapper/*.xml"></property>
 	</bean>
 	<!--5. 配置 mapper扫描
 		mybatis自动扫描加载Sql映射文件 : MapperScannerConfigurer sqlSessionFactory / basePackage
@@ -72,4 +72,5 @@
 	 <!-- 默认编码 -->  
 	<property name="defaultEncoding" value="utf-8" />
 	</bean>
+	<context:annotation-config/>
 </beans>

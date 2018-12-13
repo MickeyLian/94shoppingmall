@@ -8,6 +8,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>94购商城</title>
+		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon/favicon.ico">
+		<link rel="Bookmark" href="${pageContext.request.contextPath}/img/icon/favicon.ico">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" />
 		<script src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>

@@ -12,14 +12,15 @@ public class User {
     private String telephone;	//用户电话
     private Date birthday;		//用户生日
     private String sex;			//用户性别
+    private String photo;		//用户头像
     private Integer state;		//用户状态 1：激活 0：未激活
     private String code;		//激活码
     public User() {
-		// TODO Auto-generated constructor stub
+		
 	}
     
-    public User(String uid, String username, String password, String name, String email, String telephone,
-			Date birthday, String sex, Integer state, String code) {
+	public User(String uid, String username, String password, String name, String email, String telephone,
+			Date birthday, String sex, String photo, Integer state, String code) {
 		super();
 		this.uid = uid;
 		this.username = username;
@@ -29,9 +30,12 @@ public class User {
 		this.telephone = telephone;
 		this.birthday = birthday;
 		this.sex = sex;
+		this.photo = photo;
 		this.state = state;
 		this.code = code;
 	}
+
+
 
 	public String getUid() {
         return uid;
@@ -97,7 +101,15 @@ public class User {
         this.sex = sex == null ? null : sex.trim();
     }
     
-    public Integer getState() {
+    public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public Integer getState() {
         return state;
     }
 
@@ -116,8 +128,10 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [uid=" + uid + ", username=" + username + ", password=" + password + ", name=" + name + ", email="
-				+ email + ", telephone=" + telephone + ", birthday=" + birthday + ", sex=" + sex + ", state=" + state
-				+ ", code=" + code + "]";
+				+ email + ", telephone=" + telephone + ", birthday=" + birthday + ", sex=" + sex + ", photo=" + photo
+				+ ", state=" + state + ", code=" + code + "]";
 	}
+
+	
     
 }

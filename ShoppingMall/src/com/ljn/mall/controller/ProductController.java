@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.fileupload.FileItem;
@@ -34,7 +35,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.ljn.mall.domain.Category;
+import com.ljn.mall.domain.Comment;
 import com.ljn.mall.domain.Product;
+import com.ljn.mall.domain.Reply;
+import com.ljn.mall.domain.User;
 import com.ljn.mall.service.ICategoryService;
 import com.ljn.mall.service.IProductService;
 import com.ljn.mall.utils.PageModel;
@@ -49,6 +53,11 @@ public class ProductController {
 	@Autowired
 	ICategoryService categoryService;
 	
+	/**
+	 * 首页，返回最热商品和最新商品列表
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request) {
 		List<Product> news=productService.selectNewProducts();
@@ -57,13 +66,31 @@ public class ProductController {
 		request.setAttribute("hots", hots);
 		return "index";
 	}
+	/**
+	 * 根据商品id进入商品详情
+	 * @param pid
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/findProById")
 	public String findProById(@RequestParam(value="pid") String pid,Model model){
 		Product product=productService.selectByid(pid);
 		model.addAttribute("product", product);
-		return "product_info";
+		//评论列表
+		List<Comment> comments=productService.findComments();
+		model.addAttribute("comments", comments);
+		//回复列表
+		List<Reply> replies=productService.findReplys();
+		model.addAttribute("replies", replies);
+		return "product_info"; 
 	}
-	
+	/**
+	 * 分页查询商品列表
+	 * @param cid
+	 * @param curPage
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/selectBycidWithPage")
 	public String selectBycid(@RequestParam(value="cid") String cid,@RequestParam(value="curPage") int curPage,Model model){
 		PageModel pm =productService.selectBycidWithPage(cid, curPage);
@@ -71,7 +98,37 @@ public class ProductController {
 		return "product_list";
 	}
 	
+	//评论模块
+	/**
+	 * 增加一条评论 
+	 */
+	@RequestMapping("/addComment")
+	public String addComment(Comment comment,HttpSession session){
+		System.out.println(comment);
+		String pid=comment.getPid();
+		User user=(User) session.getAttribute("loginUser");
+		String commentHeader=user.getPhoto();
+		comment.setCommentHeader(commentHeader);
+		productService.insertComment(comment);
+		return "redirect:/findProById?pid="+pid;
+	}
+	
+	/**
+	 * 增加一条回复
+	 */
+	@RequestMapping("/addReply")
+	public String addReply(Reply reply,HttpSession session){
+		String pid=reply.getPid();
+		User user=(User) session.getAttribute("loginUser");
+		String replyHeader=user.getPhoto();
+		reply.setReplyHeader(replyHeader);
+		productService.insertReply(reply);
+		return "redirect:/findProById?pid="+pid;
+	}
+	
+	
 	//后台
+	
 	//查询所有商品
 	@RequestMapping("/findAllProductsWithPage")
 	public String findAllProductsWithPage(@RequestParam("curPage") int curPage,Model model){
@@ -105,7 +162,7 @@ public class ProductController {
 		productService.updatepflagTo0ByID(product);
 		PageModel pm=productService.selectBypflag(curPage);
 		model.addAttribute("page", pm); 
-		return "forward:/admin/product/list.jsp";
+		return "forward:/admin/product/pushDown_list.jsp";
 	}
 	
 	//增加商品（上传）
@@ -209,5 +266,8 @@ public class ProductController {
 		System.out.println(product);
 		return "redirect:/findAllProductsWithPage?curPage=1";
 	}
+	
+	
+	
 	
 }

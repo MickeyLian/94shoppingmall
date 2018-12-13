@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ljn.mall.domain.Comment;
 import com.ljn.mall.domain.Product;
+import com.ljn.mall.domain.Reply;
 import com.ljn.mall.utils.PageModel;
 
 public interface IProductDao {
@@ -26,4 +28,10 @@ public interface IProductDao {
     int updatepflagTo0ByID(Product product);				//将商品上架架 修改商品的属性pflag
     List<Product> findProduct(@Param("key")String key,@Param("startIndex")int index);		//模糊查询 搜索
     int findkeyProductCount(String key);
+    //评论模块
+    void insertComment(Comment comment);    //添加一条评论
+    void insertReply(Reply reply);			//添加一条回复
+    List<Comment> findComments();				//根据pid查询评论列表
+    List<Reply>  findReplys(); 				//根据pid查询回复列表
+    
 }

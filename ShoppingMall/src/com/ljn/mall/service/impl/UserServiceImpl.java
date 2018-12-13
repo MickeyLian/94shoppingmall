@@ -66,4 +66,21 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 
+	@Override
+	public int updatePassword(User user) {
+		return userDao.updatePassword(user);
+	}
+
+	@Override
+	public String getpassword(String uid) {
+		
+		return userDao.getpassword(uid);
+	}
+
+	@Override
+	public int updatePhoto(User user) {
+		
+		return userDao.updatePhoto(user);
+	}
+
 }

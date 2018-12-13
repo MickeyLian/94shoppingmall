@@ -8,6 +8,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>购物车</title>
+		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon/favicon.ico">
+		<link rel="Bookmark" href="${pageContext.request.contextPath}/img/icon/favicon.ico">		
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" />
 		<script src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" type="text/javascript"></script>
 		<script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
@@ -45,7 +47,7 @@
 			<div class="row">
 				<div class="container" style="height: 303px">
 					<h2>购物车空空的哦~，去看看心仪的商品吧~</h2><br>
-					<a href="${pageContext.request.contextPath}/jsp/product_list.jsp">去购物</a>
+					<a href="${pageContext.request.contextPath}/">去购物</a>
 					
 				</div>
 			</div>
@@ -53,7 +55,6 @@
 		<c:if test="${not empty cart.cartItems }">
 		<div class="container" style="height: 303px">
 			<div class="row">
-
 				<div style="margin:0 auto; margin-top:10px;width:950px;">
 					<strong style="font-size:16px;margin:5px 0;">购物详情</strong>
 					<table class="table table-bordered">
@@ -79,7 +80,8 @@
 									￥${item.product.shopPrice}
 								</td>
 								<td width="10%">
-									<input type="text" name="quantity" value="${item.num }" maxlength="4" size="10">
+									<%-- <input type="text" name="quantity" value="${item.num }" maxlength="4" size="10"> --%>
+									${item.num }
 								</td>
 								<td width="15%">
 									<span class="subtotal">￥${item.subTotal }</span>

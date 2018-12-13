@@ -43,6 +43,11 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/addCartItemToCart"/>
 			<mvc:mapping path="/findMyOrderWithPage"/>
+			<mvc:mapping path="/userinfo"/>
+			<mvc:mapping path="/modifyPasswordjsp"/>
+			<mvc:mapping path="/modifyUserPhotojsp"/>
+			<mvc:mapping path="/addComment"/>
+			<mvc:mapping path="/addReply"/>
 			<bean class="com.ljn.mall.intercepter.LoginIntercepter"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
