@@ -2,7 +2,7 @@
 ## 开发环境：Eclipse + Tomcat 9 + MySQL
 ## 项目架构：MySql + Spring + SpringMVC + Mybatis
 ## 项目描述：94购商城是一个基于B2C的商城网站，基于SSM框架；
-## 主要模块：
+## 主要功能模块：
 ### 后台管理模块：实现了商品的增删改查，及分页查询商品；
 * 后台登录页面
 ![后台登录](https://github.com/MickeyLian/94shoppingmall/blob/master/module_pic/admin_login.png)
